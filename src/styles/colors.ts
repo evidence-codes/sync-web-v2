@@ -1,6 +1,6 @@
 // src/styles/colors.ts
 const colors = {
-  primaryBg: "113CFC",
+  primaryBg: "#113CFC",
   secondaryBg: "#030C32",
 };
 

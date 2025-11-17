@@ -70,10 +70,10 @@ export default function Navbar() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="lg:hidden ml-auto">
+          <div className="lg:hidden ml-auto cursor-pointer">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-900 hover:bg-slate-100 transition-colors"
+              className="p-2 rounded-lg text-white hover:bg-[#1A1F4B] transition-colors cursor-pointer"
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>

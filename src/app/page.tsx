@@ -1,6 +1,11 @@
 import Image from "next/image";
 import Navbar from "./components/public/Navbar";
 import HeroSection from "./components/public/Hero";
+import LandingPage from "./components/public/LandingPage";
+import ClientsSection from "./components/public/clientSection";
+import UniquenessSection from "./components/public/Uniqueness";
+import TargetAndFaqSection from "./components/public/TargetAndFaqSection";
+import Footer from "./components/public/Footer";
 
 
 export default function Home() {
@@ -70,10 +75,20 @@ export default function Home() {
 
     <div className="w-full overflow-hidden">
       {/* Navbar sits on top with fixed or relative positioning */}
-      <Navbar />
+      {/* <Navbar /> */}
       
       {/* Hero section with absolute positioned background image */}
       <HeroSection />
+
+      <UniquenessSection />
+
+      <TargetAndFaqSection />
+
+      {/* <Footer /> */}
+
+      {/* <ClientsSection /> */}
+
+      {/* <LandingPage /> */}
     </div>
   );
 }

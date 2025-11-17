@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Navbar from "./components/public/Navbar";
+import Footer from "./components/public/Footer";
+import { Abhaya_Libre } from "next/font/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +16,13 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const abhaya = Abhaya_Libre({
+  weight: ["800"],
+  subsets: ["latin"],
+  variable: "--font-abhaya",
+});
+
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -92,9 +104,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}
+        className={`${geistSans.variable} ${geistMono.variable} ${abhaya.variable}  antialiased bg-black`}
       >
+        <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );
