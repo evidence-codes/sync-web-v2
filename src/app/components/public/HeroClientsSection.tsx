@@ -329,7 +329,7 @@ export default function HeroClientsSection() {
                   variants={buttonVariant}
               >
                   <Link href="/contact" passHref>
-                       <Button className="bg-[#113CFC] hover:bg-[#0E33E0] text-white w-full sm:w-auto px-3 py-3 lg:px-8 lg:py-4 text-base font-medium rounded-lg shadow-lg transition-all duration-300">
+                       <Button className="bg-[#113CFC] hover:bg-[#0E33E0] cursor-pointer text-white w-full sm:w-auto px-3 py-3 lg:px-8 lg:py-3 text-base font-medium rounded-lg shadow-lg transition-all duration-300">
                           Get Started
                       </Button>
                   </Link>
@@ -337,9 +337,9 @@ export default function HeroClientsSection() {
                   <Link href="/how-it-works" passHref>
                       <Button
                           variant="outline"
-                          className="w-full sm:w-auto text-base font-medium
+                          className="w-full sm:w-auto text-base font-medium cursor-pointer
                                     text-white border-2 border-[#113CFC] bg-transparent
-                                    hover:bg-[#113CFC] hover:text-white transition-all duration-300 rounded-lg px-3 py-3 lg:px-8 lg:py-4"
+                                    hover:bg-[#113CFC] hover:text-white transition-all duration-300 rounded-lg px-3 py-3 lg:px-8 lg:py-3s"
                       >
                           See How It Works
                       </Button>
