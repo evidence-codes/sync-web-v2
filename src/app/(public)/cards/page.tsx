@@ -68,6 +68,9 @@ const CARD_TEMPLATES: CardTemplate[] = [
 
 // --- Mock Card Back Component ---
 const MockCardBack = ({ template }: { template: CardTemplate }) => {
+    // Standard placeholder QR code image (using a public domain example for demonstration)
+    const QR_CODE_IMAGE_URL = 'https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg';
+
     return (
         <div 
             className="absolute inset-0 w-full aspect-[1/1.58] rounded-xl overflow-hidden shadow-2xl backface-hidden"
@@ -78,31 +81,44 @@ const MockCardBack = ({ template }: { template: CardTemplate }) => {
         >
             <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-between text-white">
                 
-                {/* Magnetic Stripe Area */}
-                <div className="w-full h-10 bg-neutral-800/80 mt-4 rounded-sm" />
+                {/* 1. Magnetic Stripe Area (Top) */}
+                <div className="w-full h-8 md:h-10 bg-neutral-800/80 mt-2 rounded-sm" />
 
-                {/* Signature/QR Code Area */}
-                <div className="space-y-4">
-                    <div className="flex justify-end">
-                        <div className="w-20 h-10 bg-white rounded flex items-center justify-center">
+                <div className="flex-grow flex flex-col justify-between">
+                    
+                    {/* 2. QR Code Image (Top Right) */}
+                    <div className="flex justify-end pt-3">
+                        <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded flex items-center justify-center p-1 shadow-md">
                             <Image
-                                src="/landing/sync-shape.svg"
-                                className="object-contain text-blue-900"
-                                alt="Sync Logo"
-                                width={20}
-                                height={20}
+                                src={QR_CODE_IMAGE_URL}
+                                alt="QR Code"
+                                width={64} // Set size to match container
+                                height={64}
+                                className="object-contain"
                             />
                         </div>
                     </div>
-                    <p className="text-xs text-gray-400 text-center">
-                        Secure Digital Identity Access Card
-                    </p>
-                </div>
 
-                {/* Chip area (Optional) */}
-                <div className="flex justify-end opacity-70">
-                    <div className="font-mono text-[8px] tracking-wide">
-                        Powered by SYNCNET
+                    {/* Empty space in middle */}
+                    <div className="flex-grow"></div> 
+
+                    {/* 3. Sync Logo (Bottom Left) */}
+                    <div className="flex items-end justify-between pb-1">
+                        <div className="flex items-center gap-1 opacity-90">
+                            <Image
+                                src="/landing/sync-shape.svg"
+                                className="object-contain text-white"
+                                alt="Sync Logo"
+                                width={18}
+                                height={18}
+                            />
+                            <span className="font-bold text-sm tracking-widest">Sync</span>
+                        </div>
+
+                        {/* Security Text (Bottom Right) */}
+                        <div className="font-mono text-[8px] tracking-wide text-gray-400 opacity-70">
+                            Digital Identity | SYNC-NET
+                        </div>
                     </div>
                 </div>
             </div>
@@ -391,7 +407,7 @@ export default function CardForm() {
     // --- Stage 2: Details ---
     const renderStage2 = () => {
         
-        // --- LOGIC TO GENERATE DESCRIPTIVE LABELS (carried over from previous request) ---
+        // --- LOGIC TO GENERATE DESCRIPTIVE LABELS ---
         const recipientLabels: string[] = [];
         const orderedCardIds = Object.keys(cart).map(Number).sort((a, b) => a - b);
         
@@ -405,7 +421,7 @@ export default function CardForm() {
                 }
             }
         }
-        // ---------------------------------------------------------------------------------
+        // ---------------------------------------------
 
         return (
             <div className="animate-fadeIn">
@@ -439,7 +455,7 @@ export default function CardForm() {
                             return (
                                  <div key={id} className="flex-none w-[40%] md:w-[200px] snap-center bg-[#0B1739] rounded-xl p-4 border border-white/10 flex flex-col items-center">
                                     <div className="w-full mb-3 relative">
-                                        {/* Use MockCard in Stage 2 with flip control */}
+                                        {/* Pass isFlipped state to MockCard */}
                                         <MockCard template={template} isFlipped={isFlipped} /> 
                                         <div className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-[#0B1739]">
                                             {qty}
