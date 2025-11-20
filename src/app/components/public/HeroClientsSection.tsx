@@ -225,7 +225,7 @@ export default function MergedLandingSection() {
           `}
         >
           <Image
-            src="/waves.svg"
+            src="/landing/waves.svg"
             alt="Decorative background"
             width={800}
             height={800}
