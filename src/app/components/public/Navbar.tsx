@@ -29,7 +29,7 @@ export default function Navbar() {
           <div className="flex-shrink-0">
             <Link href="/">
               <Image
-                src="/sync-logo.webp"
+                src="/landing/sync-logo.svg"
                 className="object-contain"
                 alt="Company Logo"
                 width={100}
@@ -47,7 +47,7 @@ export default function Navbar() {
                 className={`text-sm font-medium transition-colors relative group font-[inter] ${
                   pathname === item.url
                     ? "text-[#113CFC]"
-                    : "text-white hover:[#030C32]"
+                    : "text-white hover:text-[#030C32]"
                 }`}
               >
                 {item.title}

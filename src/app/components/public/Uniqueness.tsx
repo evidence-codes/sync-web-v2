@@ -179,7 +179,7 @@ export default function UniquenessSection() {
             >
                 <Image
                     // src="/sync-card-2.svg"
-                    src="/glowing-card.svg"
+                    src="/landing/glowing-card.svg"
                     alt="Sync Card"
                     width={450} 
                     height={750} 
