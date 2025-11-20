@@ -95,7 +95,7 @@ export default function Footer() {
 
                             <Link href="/">
                                 <Image
-                                    src="/sync-logo.webp"
+                                     src="/landing/sync-logo.svg"
                                     className="object-contain"
                                     alt="Company Logo"
                                     width={100}
