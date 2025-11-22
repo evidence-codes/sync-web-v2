@@ -27,7 +27,7 @@ interface Client { name: string; logo: string; }
 const clients: Client[] = [ { name: "Revolut", logo: "/landing/revolut-logo.svg" }, { name: "NorthOne", logo: "/landing/northone-logo.svg" }, { name: "Checkout", logo: "/landing/checkout-logo.svg" }, { name: "Revolut", logo: "/landing/revolut-logo.svg" }, { name: "NorthOne", logo: "/landing/northone-logo.svg" }, { name: "Checkout", logo: "/landing/checkout-logo.svg" }, ];
 interface CardFeature { text: string; }
 interface CardData { id: string; name: string; price: string; image: string; features: CardFeature[]; link: string; imageBgColor: string; }
-const cardsData: CardData[] = [ { id: "nova-card", name: "Nova Card", price: "₦30,000", image: "/landing/nova-card-back.svg", features: [{ text: "Durable plastic finish" },{ text: "Full-color surface printing" },{ text: "Lightweight and everyday use" }], link: "/cards/nova", imageBgColor: "#001e6e", }, { id: "maple-card", name: "Maple Card", price: "₦40,000", image: "/landing/maple-card-back.svg", features: [{ text: "Premium wooden body" },{ text: "Laser-engraved details" },{ text: "Natural texture and unique finish" }], link: "/cards/maple", imageBgColor: "#4f4940", }, { id: "metal-card", name: "Metal Card", price: "₦50,000", image: "/landing/metal-card-back.svg", features: [{ text: "Solid metal construction" },{ text: "Minimal print, sleek look" },{ text: "Designed for a premium feel" }], link: "/cards/metal", imageBgColor: "#1d1d1d", }, ];
+const cardsData: CardData[] = [ { id: "nova-card", name: "Nova Card", price: "₦30,000", image: "/landing/nova-card-front.jpg", features: [{ text: "Durable plastic finish" },{ text: "Full-color surface printing" },{ text: "Lightweight and everyday use" }], link: "/cards/nova", imageBgColor: "#001e6e", }, { id: "maple-card", name: "Maple Card", price: "₦40,000", image: "/landing/maple-card-front.jpg", features: [{ text: "Premium wooden body" },{ text: "Laser-engraved details" },{ text: "Natural texture and unique finish" }], link: "/cards/maple", imageBgColor: "#4f4940", }, { id: "metal-card", name: "Metal Card", price: "₦50,000", image: "/landing/metal-card-front.jpg", features: [{ text: "Solid metal construction" },{ text: "Minimal print, sleek look" },{ text: "Designed for a premium feel" }], link: "/cards/metal", imageBgColor: "#1d1d1d", }, ];
 const textVariant: Variants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const }, }, };
 const buttonVariant: Variants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const, delay: 0.5 }, }, };
 const imageVariant: Variants = { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" as const }, }, };
@@ -221,7 +221,7 @@ export default function MergedLandingSection() {
             sm:h-[1000px] sm:w-[1000px] sm:-top-30 sm:-left-80
              lg:w-[900px] lg:h-[900px] lg:-top-40 lg:-left-70
             pointer-events-none z-0
-            2xl:-top-60 2xl:-left-110 2xl:w-[1400px] 2xl:h-[1300px]
+            2xl:-top-70 2xl:-left-100 2xl:w-[1300px] 2xl:h-[1300px]
           `}
         >
           <Image
@@ -240,7 +240,7 @@ export default function MergedLandingSection() {
         ==================================================
       */}
       <div className="relative z-20 ">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-24 lg:pt-42 pb-20">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-10 lg:pt-22 pb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* LEFT SIDE CONTENT */}
             <motion.div
@@ -258,37 +258,37 @@ export default function MergedLandingSection() {
                 </span>
             </h1>
 
-              <p className="text-lg lg:text-lg text-gray-300 leading-relaxed max-w-md mx-auto lg:mx-0 text-justify font-[inter]">
+              <p className="text-center text-lg lg:text-lg text-gray-300 leading-relaxed max-w-md mx-auto lg:mx-0 lg:text-justify font-[inter]">
                 Create, share, and manage your digital identity — built for
                 professionals, teams, and institutions.
               </p>
 
 
               {/* === MOBILE-ONLY IMAGE WITH INTENSE GLOWS === */}
-              <div className="relative flex justify-center pt-8 pb-4 lg:hidden">
+              <div className="relative flex justify-center pt-2 pb-4 lg:hidden">
                 {/* GLOWS BEHIND THE CARDS - MOBILE */}
                 {/* ... (Mobile-only glows remain local for specific effect) ... */}
                 <div
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-white/30 blur-[150px] rounded-full z-0"
+                  className="hidden lg:absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-white/30 blur-[150px] rounded-full z-0"
                 />
                 <div
-                  className="absolute top-[5%] left-[5%] w-[180px] h-[180px] bg-[#113CFC]/50 blur-[100px] rounded-full z-0"
+                  className="hidden lg:absolute top-[5%] left-[5%] w-[180px] h-[180px] bg-[#113CFC]/50 blur-[100px] rounded-full z-0"
                 />
                 <div
-                  className="absolute bottom-[5%] right-[5%] w-[180px] h-[180px] bg-[#113CFC]/50 blur-[100px] rounded-full z-0"
+                  className="hidden lg:absolute bottom-[5%] right-[5%] w-[180px] h-[180px] bg-[#113CFC]/50 blur-[100px] rounded-full z-0"
                 />
                 <div
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-white/40 blur-[80px] rounded-full z-0"
+                  className="hidden lg:absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-white/40 blur-[80px] rounded-full z-0"
                 />
                 <div
-                  className="absolute top-[-5%] right-[0%] w-[150px] h-[150px] bg-white/20 blur-[70px] rounded-full z-0"
+                  className="hidden lg:absolute top-[-5%] right-[0%] w-[150px] h-[150px] bg-white/20 blur-[70px] rounded-full z-0"
                 />
                 <div
-                  className="absolute bottom-[-5%] left-[0%] w-[150px] h-[150px] bg-[#113CFC]/30 blur-[70px] rounded-full z-0"
+                  className="hidden lg:absolute bottom-[-5%] left-[0%] w-[150px] h-[150px] bg-[#113CFC]/30 blur-[70px] rounded-full z-0"
                 />
 
                 <Image
-                   src="/landing/sync-wallet-hero-cards.svg"
+                   src="/landing/sync-wallet-hero-cards.png"
                   alt="Cards Graphic"
                   width={900} 
                   height={900} 
