@@ -27,7 +27,7 @@ interface Client { name: string; logo: string; }
 const clients: Client[] = [ { name: "Revolut", logo: "/landing/revolut-logo.svg" }, { name: "NorthOne", logo: "/landing/northone-logo.svg" }, { name: "Checkout", logo: "/landing/checkout-logo.svg" }, { name: "Revolut", logo: "/landing/revolut-logo.svg" }, { name: "NorthOne", logo: "/landing/northone-logo.svg" }, { name: "Checkout", logo: "/landing/checkout-logo.svg" }, ];
 interface CardFeature { text: string; }
 interface CardData { id: string; name: string; price: string; image: string; features: CardFeature[]; link: string; imageBgColor: string; }
-const cardsData: CardData[] = [ { id: "nova-card", name: "Nova Card", price: "₦30,000", image: "/landing/nova-card-front.jpg", features: [{ text: "Durable plastic finish" },{ text: "Full-color surface printing" },{ text: "Lightweight and everyday use" }], link: "/cards/nova", imageBgColor: "#001e6e", }, { id: "maple-card", name: "Maple Card", price: "₦40,000", image: "/landing/maple-card-front.jpg", features: [{ text: "Premium wooden body" },{ text: "Laser-engraved details" },{ text: "Natural texture and unique finish" }], link: "/cards/maple", imageBgColor: "#4f4940", }, { id: "metal-card", name: "Metal Card", price: "₦50,000", image: "/landing/metal-card-front.jpg", features: [{ text: "Solid metal construction" },{ text: "Minimal print, sleek look" },{ text: "Designed for a premium feel" }], link: "/cards/metal", imageBgColor: "#1d1d1d", }, ];
+const cardsData: CardData[] = [ { id: "nova-card", name: "Nova Card", price: "₦30,000", image: "/landing/nova-card-front.png", features: [{ text: "Durable plastic finish" },{ text: "Full-color surface printing" },{ text: "Lightweight and everyday use" }], link: "/cards/nova", imageBgColor: "#001e6e", }, { id: "maple-card", name: "Maple Card", price: "₦40,000", image: "/landing/maple-card-front.png", features: [{ text: "Premium wooden body" },{ text: "Laser-engraved details" },{ text: "Natural texture and unique finish" }], link: "/cards/maple", imageBgColor: "#4f4940", }, { id: "metal-card", name: "Metal Card", price: "₦50,000", image: "/landing/metal-card-front.png", features: [{ text: "Solid metal construction" },{ text: "Minimal print, sleek look" },{ text: "Designed for a premium feel" }], link: "/cards/metal", imageBgColor: "#1d1d1d", }, ];
 const textVariant: Variants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const }, }, };
 const buttonVariant: Variants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const, delay: 0.5 }, }, };
 const imageVariant: Variants = { hidden: { opacity: 0, x: 50 }, visible: { opacity: 1, x: 0, transition: { duration: 1, ease: "easeOut" as const }, }, };
@@ -265,7 +265,7 @@ export default function MergedLandingSection() {
 
 
               {/* === MOBILE-ONLY IMAGE WITH INTENSE GLOWS === */}
-              <div className="relative flex justify-center pt-2 pb-4 lg:hidden">
+              <div className="relative flex justify-center pt-0 pb-0 lg:hidden">
                 {/* GLOWS BEHIND THE CARDS - MOBILE */}
                 {/* ... (Mobile-only glows remain local for specific effect) ... */}
                 <div
@@ -369,7 +369,7 @@ export default function MergedLandingSection() {
         SECTION 2: CLIENTS LOGO SCROLL (HEIGHT INCREASED to py-20)
         ==================================================
       */}
-      <div className="relative z-20 w-full overflow-hidden pb-12 py-20 "> {/* Reduced pb for tighter integration */}
+      <div className="relative z-20 w-full overflow-hidden pb-12 py-4"> {/* Reduced pb for tighter integration */}
         <div className="max-w-7xl mx-auto px-6 lg:px-8 ">
             {/* Heading */}
             <motion.div
