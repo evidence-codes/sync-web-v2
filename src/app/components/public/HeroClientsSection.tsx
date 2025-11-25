@@ -288,7 +288,7 @@ export default function MergedLandingSection() {
                 />
 
                 <Image
-                   src="/landing/sync-wallet-hero-cards.png"
+                   src="/landing/sync_purse.png"
                   alt="Cards Graphic"
                   width={900} 
                   height={900} 
