@@ -13,7 +13,12 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import { useMutation } from '@tanstack/react-query';
-import { PaystackButton } from 'react-paystack';
+import dynamic from 'next/dynamic';
+
+const PaystackButton = dynamic(
+  () => import('react-paystack').then((mod) => mod.PaystackButton),
+  { ssr: false }
+);
 import { CardType, OrderItem, purchaseCards } from '@/lib/api';
 import { toast } from 'react-hot-toast';
 
