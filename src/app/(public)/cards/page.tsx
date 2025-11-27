@@ -8,13 +8,20 @@ import {
     CreditCard, 
     ArrowLeft,
     RotateCw, // Icon for the flip button
+    Loader2,
+    Check
 } from 'lucide-react';
 import Image from 'next/image';
+import { useMutation } from '@tanstack/react-query';
+import { PaystackButton } from 'react-paystack';
+import { CardType, OrderItem, purchaseCards } from '@/lib/api';
+import { toast } from 'react-hot-toast';
 
 // --- TypeScript Interfaces ---
 interface CardTemplate {
     id: number;
     name: string;
+    type: CardType;
     price: number;
     theme: string;
     color: string;
@@ -37,6 +44,7 @@ const CARD_TEMPLATES: CardTemplate[] = [
     { 
         id: 1, 
         name: 'Nova', 
+        type: CardType.NOVA,
         price: 30000, 
         theme: 'bg-blue-600', 
         color: '#2563EB', 
@@ -47,6 +55,7 @@ const CARD_TEMPLATES: CardTemplate[] = [
     { 
         id: 2, 
         name: 'Maple', 
+        type: CardType.MARBLE, // Mapping Maple to Marble as per API enum
         price: 40000, 
         theme: 'bg-[#E3CAA5]', 
         color: '#D4B99F', 
@@ -57,6 +66,7 @@ const CARD_TEMPLATES: CardTemplate[] = [
     { 
         id: 3, 
         name: 'Auric', 
+        type: CardType.AURIC,
         price: 50000, 
         theme: 'bg-neutral-900', 
         color: '#171717', 
@@ -240,6 +250,7 @@ export default function CardForm() {
     const [expandedCardId, setExpandedCardId] = useState<number>(1); 
     // NEW STATE: Control the flip animation for Stage 2
     const [isFlipped, setIsFlipped] = useState(false); 
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const [contact, setContact] = useState<ContactDetails>({
         firstName: '',
@@ -293,6 +304,57 @@ export default function CardForm() {
         newEmails[index] = value;
         setContact(prev => ({ ...prev, recipientEmails: newEmails }));
     };
+
+    const purchaseMutation = useMutation({
+        mutationFn: purchaseCards,
+        onSuccess: () => {
+          setIsSuccess(true);
+          setStep(4); // Move to success step
+          toast.success('Payment successful! Cards generated.');
+        },
+        onError: (error) => {
+          console.error('Purchase failed', error);
+          toast.error('Purchase failed. Please try again.');
+        }
+    });
+
+    const handlePaystackSuccess = (reference: any) => {
+        // Construct OrderItems from cart and contact
+        const items: OrderItem[] = [];
+        let emailIndex = 0;
+
+        Object.entries(cart).forEach(([id, qty]) => {
+            const template = CARD_TEMPLATES.find(t => t.id === Number(id));
+            if (template && qty > 0) {
+                for (let i = 0; i < qty; i++) {
+                    let email = contact.email;
+                    if (contact.deliveryMethod === 'multiple' && contact.recipientEmails[emailIndex]) {
+                        email = contact.recipientEmails[emailIndex];
+                    }
+                    items.push({
+                        type: template.type,
+                        name: `${contact.firstName} ${contact.lastName}`,
+                        email: email
+                    });
+                    emailIndex++;
+                }
+            }
+        });
+
+        purchaseMutation.mutate(items);
+    };
+
+    const handlePaystackClose = () => {
+        console.log('Payment closed');
+    };
+
+    const paystackConfig = {
+        reference: (new Date()).getTime().toString(),
+        email: contact.email,
+        amount: totalAmount * 100, // Paystack expects kobo
+        publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || 'pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
+    };
+
 
     // --- Stage 1: Choose Card ---
     const renderStage1 = () => (
@@ -615,10 +677,45 @@ export default function CardForm() {
             </div>
 
             <div className="w-full max-w-md">
-                <button onClick={() => alert('Payment Processing...')} className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold text-lg shadow-xl shadow-blue-900/30 transition-all transform hover:-translate-y-1">
-                    Pay Now
-                </button>
+                <PaystackButton 
+                    {...paystackConfig} 
+                    text={purchaseMutation.isPending ? "Processing..." : "Pay Now"}
+                    onSuccess={handlePaystackSuccess}
+                    onClose={handlePaystackClose}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold text-lg shadow-xl shadow-blue-900/30 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                />
             </div>
+        </div>
+    );
+
+    // --- Stage 4: Success ---
+    const renderStage4 = () => (
+        <div className="animate-fadeIn flex flex-col items-center pt-16 px-4 text-center">
+            <div className="w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mb-8">
+                <Check className="w-12 h-12 text-green-500" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Payment Successful!</h2>
+            <p className="text-gray-400 max-w-lg mx-auto mb-12 text-lg">
+                Your cards have been successfully generated. Please check your email for access details and next steps.
+            </p>
+            <button 
+                onClick={() => {
+                    setStep(1);
+                    setCart({ 1: 1, 2: 0, 3: 0 });
+                    setContact({
+                        firstName: '',
+                        lastName: '',
+                        email: '',
+                        phone: '',
+                        deliveryMethod: 'single',
+                        recipientEmails: []
+                    });
+                    setIsSuccess(false);
+                }}
+                className="px-8 py-4 bg-white text-black rounded-xl font-bold hover:bg-gray-200 transition-colors"
+            >
+                Purchase More Cards
+            </button>
         </div>
     );
 
@@ -651,7 +748,7 @@ export default function CardForm() {
             <main className="relative z-10 max-w-7xl mx-auto md:px-8 py-4">
                 <div className="flex items-center justify-between mb-8 px-4">
                     <div className="w-20">
-                        {step > 1 && (
+                        {step > 1 && step < 4 && (
                             <button onClick={() => setStep(s => s - 1)} className="flex items-center text-gray-400 hover:text-white transition">
                                 <ArrowLeft className="mr-2" size={20} /> 
                                 <span className="hidden md:inline">Back</span>
@@ -659,7 +756,7 @@ export default function CardForm() {
                         )}
                     </div>
                     <div className="flex-grow flex justify-center">
-                         <ProgressBar step={step} />
+                         {step < 4 && <ProgressBar step={step} />}
                     </div>
                     <div className="w-20" />
                 </div>
@@ -667,7 +764,18 @@ export default function CardForm() {
                 {step === 1 && renderStage1()}
                 {step === 2 && renderStage2()}
                 {step === 3 && renderStage3()}
+                {step === 4 && renderStage4()}
             </main>
+
+            {purchaseMutation.isPending && (
+                <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 backdrop-blur-sm">
+                    <div className="bg-[#0B1739] p-8 rounded-2xl flex flex-col items-center border border-white/10">
+                        <Loader2 className="w-12 h-12 animate-spin text-blue-500 mb-4" />
+                        <p className="font-medium text-white text-lg">Processing Order...</p>
+                        <p className="text-gray-400 text-sm mt-2">Please do not close this window</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
